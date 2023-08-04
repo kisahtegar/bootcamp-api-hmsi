@@ -54,12 +54,12 @@ func (db *DB) Create(c *models.RequestInsertCustomer) error {
 
 // Implement Update customer for repository.
 func (db *DB) Update(c *models.RequestUpdateCustomer) error {
-	stmt, err := db.Conn.Prepare(`UPDATE customers SET phone = $1, email = $2, age = $3 WHERE name = $4`)
+	stmt, err := db.Conn.Prepare(`UPDATE customers SET name = $1, phone = $2, email = $3, age = $4 WHERE id = $5`)
 	if err != nil {
 		return err
 	}
-	_, errExec := stmt.Exec(c.Phone, c.Email, c.Age, c.Name)
-	if err != nil {
+	_, errExec := stmt.Exec(c.Name, c.Phone, c.Email, c.Age, c.Id)
+	if errExec != nil {
 		return errExec
 	}
 	return nil
